@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Acme.BookStore.Entities;
+using Microsoft.EntityFrameworkCore;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.FeatureManagement.EntityFrameworkCore;
@@ -12,6 +13,8 @@ namespace Acme.BookStore.Data;
 
 public class BookStoreDbContext : AbpDbContext<BookStoreDbContext>
 {
+    public DbSet<TodoItem> TodoItems { get; set; }
+
     public BookStoreDbContext(DbContextOptions<BookStoreDbContext> options)
         : base(options)
     {
@@ -32,5 +35,11 @@ public class BookStoreDbContext : AbpDbContext<BookStoreDbContext>
         builder.ConfigureTenantManagement();
 
         /* Configure your own entities here */
+
+        /* Configure your own tables/entities inside here */
+        builder.Entity<TodoItem>(b =>
+        {
+            b.ToTable("TodoItems");
+        });
     }
 }
